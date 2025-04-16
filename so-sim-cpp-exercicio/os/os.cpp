@@ -32,7 +32,7 @@ void interrupt (const Arch::InterruptCode interrupt)
 {
 	// // cpuTeste->read_io(2);
 	// Arch::Computer::get().get_terminal().write(0, typedChar);
-	
+	std::string input[] = {};
 	uint16_t interruptCode = static_cast<uint16_t>(interrupt);
 	// uint16_t read = cpuTeste->read_io(2);
 	// terminal_println(cpuTeste, Arch::Terminal::Type::Kernel, read);
@@ -43,21 +43,22 @@ void interrupt (const Arch::InterruptCode interrupt)
 	
 	// int typedChar;
 	
-	if (interruptCode == 0) {
+	if (interruptCode == 0) { // talvez pegar um array e subir 
+		
 		char typedChar;
 		// std::cin >> typeChar;
 		// terminal_println(cpuTeste, Terminal::write(1, 2));
 		typedChar = cpuTeste->read_io(2);
 		cpuTeste->write_io(1, typedChar);
-		char asciiToChar = static_cast<char>(typedChar);
+		input->push_back(typedChar);
+		// char asciiToChar = static_cast<char>(typedChar);
 		// terminal_print(cpuTeste, Arch::Terminal::Type::Command, typedChar);
 
 		switch (typedChar) {
-			case 10:
-				terminal_println(cpuTeste, Arch::Terminal::Type::Command, "randandandan");
-			
 			case 8:
-				terminal_println(cpuTeste, Arch::Terminal::Type::Command, "backspace");
+				terminal_println(cpuTeste, Arch::Terminal::Type::Kernel, "\r");
+				terminal_println(cpuTeste, Arch::Terminal::Type::Kernel, input);
+				break;
 		}
 
 		
@@ -71,9 +72,7 @@ void interrupt (const Arch::InterruptCode interrupt)
 		// }
 
 	}
-	
 
-	// terminal_print(cpuTeste, Arch::Terminal::Type::Kernel, typedChar);
 }	
 
 // ---------------------------------------
